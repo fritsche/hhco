@@ -107,4 +107,17 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+### NetBeans ###
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
 # End of https://www.gitignore.io/api/java,linux,macos,maven,windows
+
+*.lck
+*.log
