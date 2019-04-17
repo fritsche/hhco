@@ -11,6 +11,6 @@ Some algorithms were taken from jMetal (https://github.com/jMetal/jMetal);
 others from Dr. Yuan Yuan repository (https://github.com/yyxhdy/ManyEAs) or by e-mail.
 
 Note that, this code can be used only for non-commercial purposes. 
-We'd appreciate your acknowledgment if you use the code.
+We would appreciate your acknowledgment if you use the code.
 
 For any problem concerning the code, please fill in an issue: https://github.com/fritsche/hhco/issues.
