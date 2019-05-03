@@ -79,6 +79,7 @@ public class Runner {
         this.m = m;
         this.id = id;
         this.seed = seed;
+        this.factory = factory;
     }
 
     public void run() {
@@ -185,4 +186,7 @@ public class Runner {
         return this;
     }
 
+    public void setFactory(AlgorithmConfigurationFactory factory) {
+        this.factory = factory;
+    }
 }
