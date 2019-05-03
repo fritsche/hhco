@@ -53,7 +53,7 @@ public class Main {
                     .desc("set the algorithm to be executed: NSGAII, MOEAD, MOEADD, ThetaDEA, NSGAIII, SPEA2, SPEA2SDE, HypE, MOMBI2, HHLA, HHCO (default), <other>."
                             + "If <other> name is given, HHCO will be executed and the algorithm output name will be <other>.").build());
             options.addOption(Option.builder("p").longOpt("problem").hasArg().argName("problem")
-                    .desc("set the problem instance: DTLZ[1-7], WFG[1-9], MinusDTLZ[1-7], MinusWFG[1-9], MaF[1-15]; default is WFG1."
+                    .desc("set the problem instance: DTLZ[1-7], WFG[1-9], MinusDTLZ[1-7], MinusWFG[1-9], MaF[01-15]; default is WFG1."
                             + "<methodology> must be set accordingly.").build());
             options.addOption(Option.builder("m").longOpt("objectives").hasArg().argName("objectives")
                     .desc("set the number of objectives to <objectives> (default value is 3). <problem> and <methodology> must be set acordingly.").build());
