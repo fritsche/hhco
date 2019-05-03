@@ -46,7 +46,7 @@ import org.uma.jmetal.util.JMetalException;
  */
 public class AlgorithmConfigurationFactory {
 
-    public static AlgorithmConfiguration getAlgorithmConfiguration(String algorithm) {
+    public AlgorithmConfiguration getAlgorithmConfiguration(String algorithm) {
         if (algorithm.equals(ThetaDEA.class.getSimpleName())) {
             return new ThetaDEAConfiguration();
         } else if (algorithm.equals(NSGAIII.class.getSimpleName())) {

@@ -49,7 +49,7 @@ public class Runner {
     private int m;
     private int id;
     private long seed;
-
+    private AlgorithmConfigurationFactory factory;
     private Algorithm<List<DoubleSolution>> algorithm;
     private Problem problem;
     private int popSize;
@@ -62,10 +62,16 @@ public class Runner {
         this.methodologyName = NSGAIIIMethodology.class.getSimpleName();
         this.id = 0;
         this.seed = System.currentTimeMillis();
+        this.factory = new AlgorithmConfigurationFactory();
     }
 
     public Runner(String experimentBaseDirectory, String methodologyName,
             String algorithmName, String problemName, int m, int id, long seed) {
+        this(experimentBaseDirectory, methodologyName, algorithmName, problemName, m, id, seed, new AlgorithmConfigurationFactory());
+    }
+
+    public Runner(String experimentBaseDirectory, String methodologyName,
+            String algorithmName, String problemName, int m, int id, long seed, AlgorithmConfigurationFactory factory) {
         this.experimentBaseDirectory = experimentBaseDirectory;
         this.methodologyName = methodologyName;
         this.algorithmName = algorithmName;
@@ -100,7 +106,7 @@ public class Runner {
         JMetalRandom.getInstance().setSeed(seed);
         JMetalLogger.logger.log(Level.CONFIG, "Seed: {0}", seed);
 
-        algorithm = AlgorithmConfigurationFactory
+        algorithm = factory
                 .getAlgorithmConfiguration(algorithmName)
                 .configure(popSize, maxFitnessevaluations, problem);
 
