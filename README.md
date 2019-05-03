@@ -1,4 +1,4 @@
-# HH-CO
+# HH-CO [![](https://jitpack.io/v/fritsche/hhco.svg)](https://jitpack.io/#fritsche/hhco)
 
 This program mainly implements the HH-CO algorithm, described in our paper:
 
