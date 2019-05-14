@@ -153,17 +153,9 @@ public class CommandLineIndicatorRunner {
     private static List<QualityIndicator<List<PointSolution>, Double>> getAvailableIndicators(
             Front referenceFront) throws FileNotFoundException {
 
-        Hypervolume<PointSolution> hv;
-        if (referenceFront.getPointDimensions() >= 10) {
-            hv = new HypervolumeApprox<>(referenceFront);
-        } else {
-            hv = new PISAHypervolume<>(referenceFront);
-            hv.setOffset(0.1);
-        }
-
         List<QualityIndicator<List<PointSolution>, Double>> list = new ArrayList<>();
         list.add(new Epsilon<>(referenceFront));
-        list.add(hv);
+        list.add(new HypervolumeApprox<>(referenceFront));
         list.add(new GenerationalDistance<>(referenceFront));
         list.add(new InvertedGenerationalDistance<>(referenceFront));
         list.add(new InvertedGenerationalDistancePlus<>(referenceFront));
