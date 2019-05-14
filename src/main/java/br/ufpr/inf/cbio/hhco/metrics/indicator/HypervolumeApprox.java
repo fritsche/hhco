@@ -74,7 +74,7 @@ public class HypervolumeApprox<S extends Solution<?>> extends Hypervolume<S> {
             double totalVolume = Math.pow(offset, numberOfObjectives);
             for (int i = 0; i < sampleSize; i++) {
                 for (int j = 0; j < numberOfObjectives; j++) {
-                    generated[j] = JMetalRandom.getInstance().nextDouble(0, offset);
+                    generated[j] = JMetalRandom.getInstance().nextDouble(0, 1);
                 }
                 for (int k = 0; k < front.getNumberOfPoints(); k++) {
                     Point point = front.getPoint(k);
