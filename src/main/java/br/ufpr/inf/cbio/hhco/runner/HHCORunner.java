@@ -158,7 +158,7 @@ public class HHCORunner {
 
             List population = SolutionListUtils.getNondominatedSolutions(hhco.getResult());
 
-            int maxPopSize = 340; // MaFMethodology
+            int maxPopSize = 240; // MaFMethodology
 
             // prune output population size
             if (population.size() > maxPopSize) {
