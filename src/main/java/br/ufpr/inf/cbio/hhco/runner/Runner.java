@@ -42,17 +42,17 @@ import org.uma.jmetal.util.pseudorandom.JMetalRandom;
  */
 public class Runner {
 
-    private String experimentBaseDirectory;
-    private String methodologyName;
-    private String algorithmName;
-    private String problemName;
-    private int m;
-    private int id;
-    private long seed;
-    private AlgorithmConfigurationFactory factory;
-    private Algorithm<List<DoubleSolution>> algorithm;
-    private Problem problem;
-    private int popSize;
+    protected String experimentBaseDirectory;
+    protected String methodologyName;
+    protected String algorithmName;
+    protected String problemName;
+    protected int m;
+    protected int id;
+    protected long seed;
+    protected AlgorithmConfigurationFactory factory;
+    protected Algorithm<List<DoubleSolution>> algorithm;
+    protected Problem problem;
+    protected int popSize;
 
     public Runner() {
         this.algorithmName = "HHCO";
