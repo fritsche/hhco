@@ -49,7 +49,7 @@ public class HHCO<S extends Solution<?>> extends Observable implements Algorithm
     private List<CooperativeAlgorithm<S>> algorithms;
     protected double fir;
     private CooperativeAlgorithm<S> selected;
-    
+
     public HHCO(List<CooperativeAlgorithm<S>> algorithms, int populationSize, int maxEvaluations,
             Problem problem, String name, SelectionFunction<CooperativeAlgorithm> selection,
             FitnessImprovementRateCalculator fir) {
@@ -79,9 +79,8 @@ public class HHCO<S extends Solution<?>> extends Observable implements Algorithm
     private void computeImprovementOfAllMOEAs(Map<CooperativeAlgorithm<S>, List<S>> populations) {
         moeasfir = new ArrayList<>(getAlgorithms().size());
         int i = 0;
-        for (Map.Entry<CooperativeAlgorithm<S>, List<S>> entry : populations.entrySet()) {
-            CooperativeAlgorithm<S> algorithm = entry.getKey();
-            List<S> oldpop = entry.getValue();
+        for (CooperativeAlgorithm<S> algorithm : algorithms) {
+            List<S> oldpop = populations.get(algorithm);
             List<S> newpop = algorithm.getPopulation();
             moeasfir.add(i, calculator.computeFitnessImprovementRate(oldpop, newpop));
             i++;
@@ -109,7 +108,7 @@ public class HHCO<S extends Solution<?>> extends Observable implements Algorithm
 
             // heuristic selection
             selected = selection.getNext(getEvaluations() / populationSize);
-         
+
             // apply selected heuristic
             selected.doIteration();
             // copy the solutions generatedy by selected
@@ -140,7 +139,6 @@ public class HHCO<S extends Solution<?>> extends Observable implements Algorithm
 
             // move acceptance
             // ALL MOVES
-            
             // notify observers
             setChanged();
             notifyObservers();
@@ -156,8 +154,8 @@ public class HHCO<S extends Solution<?>> extends Observable implements Algorithm
     public void setMoeasfir(ArrayList<Double> moeasfir) {
         this.moeasfir = moeasfir;
     }
-    
-     @Override
+
+    @Override
     public List<S> getResult() {
         List<S> union = new ArrayList<>();
         for (CooperativeAlgorithm alg : algorithms) {
@@ -219,6 +217,5 @@ public class HHCO<S extends Solution<?>> extends Observable implements Algorithm
     public CooperativeAlgorithm getSelected() {
         return selected;
     }
-
 
 }
