@@ -54,21 +54,33 @@ public class HypervolumeApprox<S extends Solution<?>> extends Hypervolume<S> {
         updateReferencePoint(referenceParetoFront);
     }
 
+    public void normalize(Front front) {
+        // normalize solutions
+        for (int i = 0; i < front.getNumberOfPoints(); i++) {
+            Point point = front.getPoint(i);
+            for (int j = 0; j < point.getDimension(); j++) {
+                point.setValue(j, point.getValue(j) / (offset * referencePoint.getValue(j)));
+            }
+        }
+    }
+
+    /**
+     * Hypervolume (HV). Benchmark Functions for CEC’2018 Competition on
+     * Many-Objective Optimization. 3.2 Performance Metrics.
+     * https://pdfs.semanticscholar.org/49f0/faafbc8d72f358d49f5dfc169db71df08d3a.pdf
+     *
+     * @param solutionList
+     * @return
+     */
     @Override
     public Double evaluate(List<S> solutionList) {
         double hv = 0.0;
         if (!solutionList.isEmpty()) {
             numberOfObjectives = solutionList.get(0).getNumberOfObjectives();
             Front front = new ArrayFront(solutionList);
-
-            // normalize solutions
-            for (int i = 0; i < front.getNumberOfPoints(); i++) {
-                Point point = front.getPoint(i);
-                for (int j = 0; j < point.getDimension(); j++) {
-                    point.setValue(j, point.getValue(j) / (offset * referencePoint.getValue(j)));
-                }
-            }
-
+            
+            normalize(front);
+            
             int countDominated = 0;
             double[] generated = new double[numberOfObjectives];
             double totalVolume = Math.pow(offset, numberOfObjectives);
@@ -121,14 +133,14 @@ public class HypervolumeApprox<S extends Solution<?>> extends Hypervolume<S> {
         }
 
         for (int i = 0; i < referencePoint.getDimension(); i++) {
-            referencePoint.setValue(i, maxObjectives[i] + offset);
+            referencePoint.setValue(i, maxObjectives[i]);
         }
     }
 
     /**
      * Updates the reference point
      */
-    private void updateReferencePoint(Front front) {
+    public void updateReferencePoint(Front front) {
         double[] maxObjectives = new double[numberOfObjectives];
         for (int i = 0; i < numberOfObjectives; i++) {
             maxObjectives[i] = 0;
@@ -150,7 +162,7 @@ public class HypervolumeApprox<S extends Solution<?>> extends Hypervolume<S> {
         }
 
         for (int i = 0; i < referencePoint.getDimension(); i++) {
-            referencePoint.setValue(i, maxObjectives[i] + offset);
+            referencePoint.setValue(i, maxObjectives[i]);
         }
     }
 

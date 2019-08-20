@@ -121,3 +121,4 @@ nbdist/
 
 *.lck
 *.log
+/nbproject/
