@@ -16,7 +16,6 @@
  */
 package br.ufpr.inf.cbio.hhco.metrics.indicator;
 
-import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,20 +57,21 @@ public class HypervolumeApproxTest {
     @Test
     public void testNormalize() {
         System.out.println("normalize");
-        int points = 4, dimensions = 2;
+        int points = 3, dimensions = 2;
         Front front = new ArrayFront(points, dimensions);
-        front.setPoint(0, new ArrayPoint(new double[]{1.00, 4.00}));
-        front.setPoint(1, new ArrayPoint(new double[]{1.50, 3.00}));
-        front.setPoint(2, new ArrayPoint(new double[]{1.75, 2.00}));
-        front.setPoint(3, new ArrayPoint(new double[]{2.00, 1.00}));
+        front.setPoint(0, new ArrayPoint(new double[]{0, 3}));
+        front.setPoint(1, new ArrayPoint(new double[]{5, 0}));
+        front.setPoint(2, new ArrayPoint(new double[]{2.5, 1.5}));
 
         HypervolumeApprox instance = new HypervolumeApprox(front);
         instance.normalize(front);
 
         Front result = new ArrayFront(points, dimensions);
+        result.setPoint(0, new ArrayPoint(new double[]{0, (1.0 / 1.1) * 1.0}));
+        result.setPoint(1, new ArrayPoint(new double[]{(1.0 / 1.1) * 1.0, 0}));
+        result.setPoint(2, new ArrayPoint(new double[]{(1.0 / 1.1) * 0.5, (1.0 / 1.1) * 0.5}));
 
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(front, result);
     }
 
 }
