@@ -16,15 +16,21 @@
  */
 package br.ufpr.inf.cbio.hhco.metrics.indicator;
 
+import br.ufpr.inf.cbio.hhco.utils.MockRandomNumberGenerator;
+import java.util.ArrayList;
+import java.util.List;
+import org.uma.jmetal.solution.Solution;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import org.uma.jmetal.problem.multiobjective.dtlz.DTLZ1;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
 import org.uma.jmetal.util.point.impl.ArrayPoint;
+import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
  *
@@ -74,4 +80,41 @@ public class HypervolumeApproxTest {
         assertEquals(front, result);
     }
 
+    /**
+     * Test of evaluate method, of class HypervolumeApprox.
+     */
+    @Test
+    public void testEvaluate() {
+        System.out.println("evaluate");
+        JMetalRandom.getInstance().setRandomGenerator(new MockRandomNumberGenerator(
+                new double[]{0.0, 0.0, 0.0, 0.5, 0.0, 1.0,
+                    0.5, 0.0, 0.5, 0.5, 0.5, 1.0,
+                    1.0, 0.0, 1.0, 0.5, 1.0, 1.0}));
+        int sampleSize = 9, points = 3, dimensions = 2;
+        Front front = new ArrayFront(points, dimensions);
+        front.setPoint(0, new ArrayPoint(new double[]{0, 3}));
+        front.setPoint(1, new ArrayPoint(new double[]{5, 0}));
+        front.setPoint(2, new ArrayPoint(new double[]{2.5, 1.5}));
+        HypervolumeApprox instance = new HypervolumeApprox(front, sampleSize);
+        Double expResult = 2.0 / 3.0;
+        List<Solution> solutionList = new ArrayList<>();
+        solutionList.add(createSolution(0, 3));
+        solutionList.add(createSolution(5, 0));
+        solutionList.add(createSolution(2.5, 1.5));
+        Double result = instance.evaluate(solutionList);
+        assertEquals(expResult, result);
+    }
+
+    public static Solution createSolution(double... objectiveValues) {
+
+        DTLZ1 p = new DTLZ1(1, objectiveValues.length);
+
+        Solution s = p.createSolution();
+
+        for (int i = 0; i < objectiveValues.length; i++) {
+            s.setObjective(i, objectiveValues[i]);
+        }
+
+        return s;
+    }
 }

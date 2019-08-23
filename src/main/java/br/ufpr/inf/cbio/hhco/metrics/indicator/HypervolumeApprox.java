@@ -21,12 +21,17 @@ public class HypervolumeApprox<S extends Solution<?>> extends Hypervolume<S> {
 
     private static final double DEFAULT_OFFSET = 1.1;
     private double offset = DEFAULT_OFFSET;
-    private final int sampleSize = 1000000;
+    private int sampleSize = 1000000;
 
     /**
      * Default constructor
      */
     public HypervolumeApprox() {
+    }
+
+    public HypervolumeApprox(Front referenceParetoFront, int sampleSize) {
+        this(referenceParetoFront);
+        this.sampleSize = sampleSize;
     }
 
     /**
@@ -78,15 +83,14 @@ public class HypervolumeApprox<S extends Solution<?>> extends Hypervolume<S> {
         if (!solutionList.isEmpty()) {
             numberOfObjectives = solutionList.get(0).getNumberOfObjectives();
             Front front = new ArrayFront(solutionList);
-            
+
             normalize(front);
-            
+
             int countDominated = 0;
             double[] generated = new double[numberOfObjectives];
-            double totalVolume = Math.pow(offset, numberOfObjectives);
             for (int i = 0; i < sampleSize; i++) {
                 for (int j = 0; j < numberOfObjectives; j++) {
-                    generated[j] = JMetalRandom.getInstance().nextDouble(0, 1);
+                    generated[j] = JMetalRandom.getInstance().nextDouble(0.0, 1.0);
                 }
                 for (int k = 0; k < front.getNumberOfPoints(); k++) {
                     Point point = front.getPoint(k);
@@ -103,7 +107,7 @@ public class HypervolumeApprox<S extends Solution<?>> extends Hypervolume<S> {
                     }
                 }
             }
-            hv = (double) countDominated / (double) sampleSize * totalVolume;
+            hv = (double) countDominated / (double) sampleSize;
         }
         return hv;
     }
@@ -213,5 +217,4 @@ public class HypervolumeApprox<S extends Solution<?>> extends Hypervolume<S> {
     public String getName() {
         return "HV";
     }
-
 }
