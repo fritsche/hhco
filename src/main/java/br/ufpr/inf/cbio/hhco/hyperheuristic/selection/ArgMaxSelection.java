@@ -17,6 +17,7 @@
 package br.ufpr.inf.cbio.hhco.hyperheuristic.selection;
 
 import java.util.ArrayList;
+import java.util.List;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**
@@ -40,17 +41,27 @@ public class ArgMaxSelection<T> extends SelectionFunction<T> {
         credits = new double[lowlevelheuristics.size()];
     }
 
+    public static boolean equals(double a, double b) {
+        double EPSILON = 1E-6;
+        return a == b ? true : Math.abs(a - b) < EPSILON;
+    }
+
     @Override
     public T getNext(int it) {
         if (!first) {
             double max = credits[0];
-            s = 0;
             for (int i = 1; i < credits.length; i++) {
                 if (max < credits[i]) {
                     max = credits[i];
-                    s = i;
                 }
             }
+            List<Integer> best = new ArrayList<>();
+            for (int i = 0; i < credits.length; i++) {
+                if (equals(credits[i], max)) {
+                    best.add(i);
+                }
+            }
+            s = best.get(random.nextInt(0, best.size() - 1));
         } else {
             first = false;
             s = random.nextInt(0, lowlevelheuristics.size() - 1);
