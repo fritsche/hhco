@@ -78,7 +78,7 @@ public class COSPEA2<S extends Solution<?>> extends SPEA2<S> implements Cooperat
 
     @Override
     public void receive(List<S> solutions) {
-        selection(solutions);
+        population = selection(solutions);
     }
 
     @Override

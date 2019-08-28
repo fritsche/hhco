@@ -76,7 +76,7 @@ public class COSPEA2SDE<S extends Solution<?>> extends SPEA2SDE<S> implements Co
 
     @Override
     public void receive(List<S> solutions) {
-        selection(solutions);
+        population = selection(solutions);
     }
 
     @Override
