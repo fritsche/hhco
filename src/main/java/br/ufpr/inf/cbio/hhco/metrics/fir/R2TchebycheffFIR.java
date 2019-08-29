@@ -24,6 +24,7 @@ import org.uma.jmetal.problem.Problem;
 import org.uma.jmetal.solution.Solution;
 import org.uma.jmetal.util.front.Front;
 import org.uma.jmetal.util.front.imp.ArrayFront;
+import org.uma.jmetal.util.point.impl.ArrayPoint;
 
 /**
  *
@@ -34,28 +35,72 @@ public class R2TchebycheffFIR implements FitnessImprovementRateCalculator<Soluti
     private final double[][] lambda;
     private final int m;
 
+    protected double[] zp_;
+    protected double[] nzp_;
+
     public R2TchebycheffFIR(Problem problem, int populationSize) {
         this.lambda = WeightVectorUtils.initializeUniformWeight(problem, populationSize);
         this.m = problem.getNumberOfObjectives();
+        initIdealPoint();
+        initNadirPoint();
     }
 
     @Override
     public double computeFitnessImprovementRate(List<Solution<?>> parents, List<Solution<?>> offspring) {
-        int points = parents.size() + offspring.size();
-        Front reference = new ArrayFront(points, m);
+
+        for (Solution<?> s : parents) {
+            updateReference(s, zp_);
+            updateNadirPoint(s, nzp_);
+        }
+
+        Front reference = new ArrayFront(2, m);
+        reference.setPoint(0, new ArrayPoint(zp_));
+        reference.setPoint(1, new ArrayPoint(nzp_));
+
         Front parentsFront = new ArrayFront(parents);
         Front offspringFront = new ArrayFront(offspring);
-        int i = 0;
-        for (int p = 0; p < parents.size(); p++, i++) {
-            reference.setPoint(i, parentsFront.getPoint(p));
-        }
-        for (int o = 0; o < offspring.size(); o++, i++) {
-            reference.setPoint(i, offspringFront.getPoint(o));
-        }
+
         R2 r2 = new R2(lambda, reference, new Tchebycheff());
         double parentR2 = r2.r2(parentsFront);
         double offspringR2 = r2.r2(offspringFront);
-        return (parentR2 - offspringR2) / offspringR2;
+
+        if (offspringR2 == parentR2) {
+            return 0.0;
+        } else if (offspringR2 == 0.0) {
+            return (parentR2 - offspringR2) * Double.POSITIVE_INFINITY;
+        } else {
+            return (parentR2 - offspringR2) / offspringR2;
+        }
+    }
+
+    void updateReference(Solution indiv, double[] z_) {
+        for (int i = 0; i < m; i++) {
+            if (indiv.getObjective(i) < z_[i]) {
+                z_[i] = indiv.getObjective(i);
+            }
+        }
+    }
+
+    void updateNadirPoint(Solution indiv, double[] nz_) {
+        for (int i = 0; i < m; i++) {
+            if (indiv.getObjective(i) > nz_[i]) {
+                nz_[i] = indiv.getObjective(i);
+            }
+        }
+    }
+
+    final void initIdealPoint() {
+        zp_ = new double[m];
+        for (int i = 0; i < m; i++) {
+            zp_[i] = 1.0e+30;
+        }
+    }
+
+    final void initNadirPoint() {
+        nzp_ = new double[m];
+        for (int i = 0; i < m; i++) {
+            nzp_[i] = -1.0e+30;
+        }
     }
 
 }
