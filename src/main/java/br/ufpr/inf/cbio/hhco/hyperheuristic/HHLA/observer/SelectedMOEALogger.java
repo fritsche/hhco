@@ -14,40 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.observer;
+package br.ufpr.inf.cbio.hhco.hyperheuristic.HHLA.observer;
 
-import br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.HHCO;
-import br.ufpr.inf.cbio.hhco.util.output.OutputWriter;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.logging.Level;
-import org.uma.jmetal.util.JMetalLogger;
+import br.ufpr.inf.cbio.hhco.hyperheuristic.CooperativeAlgorithm;
+import br.ufpr.inf.cbio.hhco.hyperheuristic.HHLA.HHLA;
+import java.util.List;
 
 /**
  *
  * @author Gian Fritsche <gmfritsche at inf.ufpr.br>
  */
-public abstract class HHCOLogger implements Observer {
+public class SelectedMOEALogger extends HHLALogger {
 
-    protected final OutputWriter ow;
-
-    public HHCOLogger(String folder, String file) {
-        JMetalLogger.logger.log(Level.CONFIG, "{0}: ENABLED", this.getClass().getSimpleName());
-        ow = new OutputWriter(folder, file);
+    public SelectedMOEALogger(String folder, String file) {
+        super(folder, file);
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        update((HHCO) o);
-    }
-
-    public abstract void update(HHCO hhco);
-
-    /**
-     * Close buffer and write to file
-     */
-    public void close() {
-        ow.close();
+    public void update(HHLA hhla) {
+        CooperativeAlgorithm selected = hhla.getSelected();
+        List<CooperativeAlgorithm> algorithms = hhla.getAlgorithms();
+        ow.writeLine(Integer.toString(algorithms.indexOf(selected)));
     }
 
 }

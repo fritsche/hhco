@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 Gian Fritsche <gmfritsche at inf.ufpr.br>
+ * Copyright (C) 2019 Gian Fritsche <gmfritsche at inf.ufpr.br>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,9 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.observer;
+package br.ufpr.inf.cbio.hhco.hyperheuristic.HHLA.observer;
 
-import br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.HHCO;
+import br.ufpr.inf.cbio.hhco.hyperheuristic.HHLA.HHLA;
 import br.ufpr.inf.cbio.hhco.util.output.OutputWriter;
 import java.util.Observable;
 import java.util.Observer;
@@ -27,21 +27,21 @@ import org.uma.jmetal.util.JMetalLogger;
  *
  * @author Gian Fritsche <gmfritsche at inf.ufpr.br>
  */
-public abstract class HHCOLogger implements Observer {
+public abstract class HHLALogger implements Observer {
 
     protected final OutputWriter ow;
 
-    public HHCOLogger(String folder, String file) {
+    public HHLALogger(String folder, String file) {
         JMetalLogger.logger.log(Level.CONFIG, "{0}: ENABLED", this.getClass().getSimpleName());
         ow = new OutputWriter(folder, file);
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        update((HHCO) o);
+        update((HHLA) o);
     }
 
-    public abstract void update(HHCO hhco);
+    public abstract void update(HHLA hhla);
 
     /**
      * Close buffer and write to file

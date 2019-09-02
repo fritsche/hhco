@@ -136,7 +136,9 @@ public class HHLA<S extends Solution<?>> extends Observable implements Algorithm
                 selected.init(copy, populationSize);
                 g = 0;
             }
-
+            
+            setChanged();
+            notifyObservers();
         }
     }
 
