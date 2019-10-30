@@ -14,7 +14,7 @@
         <dependency>
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal</artifactId>
-            <version>5.6</version>
+            <version>5.9</version>
             <type>pom</type>
         </dependency>
         <dependency>
@@ -25,25 +25,25 @@
         <dependency>
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-algorithm</artifactId>
-            <version>5.6</version>
+            <version>5.9</version>
             <classifier>jar-with-dependencies</classifier>
         </dependency>
         <dependency>
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-core</artifactId>
-            <version>5.6</version>
+            <version>5.9</version>
             <classifier>jar-with-dependencies</classifier>
         </dependency>
         <dependency>
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-exec</artifactId>
-            <version>5.6</version>
+            <version>5.9</version>
             <classifier>jar-with-dependencies</classifier>
         </dependency>
         <dependency>
             <groupId>org.uma.jmetal</groupId>
             <artifactId>jmetal-problem</artifactId>
-            <version>5.6</version>
+            <version>5.9</version>
             <classifier>jar-with-dependencies</classifier>
         </dependency>
         <!-- https://mvnrepository.com/artifact/commons-cli/commons-cli -->
