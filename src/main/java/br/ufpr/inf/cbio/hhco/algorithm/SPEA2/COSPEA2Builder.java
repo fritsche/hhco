@@ -34,7 +34,7 @@ public class COSPEA2Builder extends SPEA2Builder<Solution<?>> {
 
     @Override
     public COSPEA2<Solution<?>> build() {
-        return new COSPEA2(problem, maxIterations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator);
+        return new COSPEA2(problem, maxIterations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator, k);
     }
   
 }

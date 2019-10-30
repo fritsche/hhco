@@ -38,8 +38,8 @@ public class COSPEA2<S extends Solution<?>> extends SPEA2<S> implements Cooperat
     public List<S> offspringPopulation;
     public EnvironmentalSelection<S> environmentalSelectionOverride;
 
-    public COSPEA2(Problem problem, int maxIterations, int populationSize, CrossoverOperator crossoverOperator, MutationOperator mutationOperator, SelectionOperator selectionOperator, SolutionListEvaluator evaluator) {
-        super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator);
+    public COSPEA2(Problem problem, int maxIterations, int populationSize, CrossoverOperator crossoverOperator, MutationOperator mutationOperator, SelectionOperator selectionOperator, SolutionListEvaluator evaluator, int k) {
+        super(problem, maxIterations, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator, k);
     }
 
     @Override
