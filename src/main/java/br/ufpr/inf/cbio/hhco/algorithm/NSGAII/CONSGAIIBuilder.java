@@ -34,8 +34,8 @@ public class CONSGAIIBuilder<S extends Solution<?>> extends NSGAIIBuilder<S> {
 
     private Comparator<S> dominanceComparator;
 
-    public CONSGAIIBuilder(Problem<S> problem, CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator) {
-        super(problem, crossoverOperator, mutationOperator);
+    public CONSGAIIBuilder(Problem<S> problem, CrossoverOperator<S> crossoverOperator, MutationOperator<S> mutationOperator, int populationSize) {
+        super(problem, crossoverOperator, mutationOperator, populationSize);
         dominanceComparator = new DominanceComparator<>();
     }
 

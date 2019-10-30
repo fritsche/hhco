@@ -66,10 +66,9 @@ public class NSGAIIConfiguration implements AlgorithmConfiguration<NSGAII<?>> {
 
         setup();
 
-        return new NSGAIIBuilder<>(problem, crossover, mutation)
+        return new NSGAIIBuilder<>(problem, crossover, mutation, popSize + (popSize % 2))
                 .setSelectionOperator(selection)
                 .setMaxEvaluations(maxFitnessEvaluations)
-                .setPopulationSize(popSize + (popSize % 2))
                 .build();
     }
 

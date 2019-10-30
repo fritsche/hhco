@@ -31,10 +31,9 @@ public class CONSGAIIConfiguration extends NSGAIIConfiguration {
 
         setup();
 
-        return ((CONSGAIIBuilder) new CONSGAIIBuilder(problem, crossover, mutation)
+        return ((CONSGAIIBuilder) new CONSGAIIBuilder(problem, crossover, mutation, popSize)
                 .setSelectionOperator(selection)
-                .setMaxEvaluations(maxFitnessEvaluations)
-                .setPopulationSize(popSize))
+                .setMaxEvaluations(maxFitnessEvaluations))
                 .build();
     }
 
