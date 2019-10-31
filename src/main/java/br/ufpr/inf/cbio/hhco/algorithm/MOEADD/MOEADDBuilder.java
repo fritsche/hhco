@@ -35,7 +35,7 @@ public class MOEADDBuilder<S extends Solution<?>> implements AlgorithmBuilder<MO
     private int populationSize;
     private int maxEvaluations;
 
-    MOEADDBuilder(Problem<S> problem) {
+    public MOEADDBuilder(Problem<S> problem) {
         this.problem = problem;
     }
 
