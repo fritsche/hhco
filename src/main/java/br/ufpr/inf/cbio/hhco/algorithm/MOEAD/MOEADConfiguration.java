@@ -33,9 +33,9 @@ import org.uma.jmetal.solution.DoubleSolution;
  */
 public class MOEADConfiguration implements AlgorithmConfiguration<MOEAD> {
 
-    MutationOperator<DoubleSolution> mutation;
-    DifferentialEvolutionCrossover crossover;
-    DoubleProblem problem;
+    private MutationOperator<DoubleSolution> mutation;
+    private DifferentialEvolutionCrossover crossover;
+    private DoubleProblem problem;
 
     @Override
     public MOEAD configure(int popSize, int maxFitnessEvaluations, Problem problem) {
@@ -66,6 +66,30 @@ public class MOEADConfiguration implements AlgorithmConfiguration<MOEAD> {
         double mutationProbability = 1.0 / problem.getNumberOfVariables();
         double mutationDistributionIndex = 20.0;
         mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
+    }
+
+    public MutationOperator<DoubleSolution> getMutation() {
+        return mutation;
+    }
+
+    public void setMutation(MutationOperator<DoubleSolution> mutation) {
+        this.mutation = mutation;
+    }
+
+    public DifferentialEvolutionCrossover getCrossover() {
+        return crossover;
+    }
+
+    public void setCrossover(DifferentialEvolutionCrossover crossover) {
+        this.crossover = crossover;
+    }
+
+    public DoubleProblem getProblem() {
+        return problem;
+    }
+
+    public void setProblem(DoubleProblem problem) {
+        this.problem = problem;
     }
 
 }

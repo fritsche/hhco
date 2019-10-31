@@ -29,13 +29,13 @@ public class COMOEADConfiguration extends MOEADConfiguration {
 
     @Override
     public COMOEAD configure(int popSize, int maxFitnessEvaluations, Problem problem) {
-        this.problem = (DoubleProblem) problem;
+        setProblem((DoubleProblem) problem);
 
         setup();
 
         return (COMOEAD) new COMOEADBuilder(problem, MOEADBuilder.Variant.MOEAD)
-                .setCrossover(crossover)
-                .setMutation(mutation)
+                .setCrossover(getCrossover())
+                .setMutation(getMutation())
                 .setMaxEvaluations(maxFitnessEvaluations)
                 .setPopulationSize(popSize)
                 .setResultPopulationSize(popSize)
