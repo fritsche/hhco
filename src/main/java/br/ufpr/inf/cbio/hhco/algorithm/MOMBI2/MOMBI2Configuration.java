@@ -35,10 +35,10 @@ import org.uma.jmetal.util.evaluator.impl.SequentialSolutionListEvaluator;
  */
 public class MOMBI2Configuration implements AlgorithmConfiguration<MOMBI2<?>> {
 
-    CrossoverOperator<DoubleSolution> crossover;
-    MutationOperator<DoubleSolution> mutation;
-    SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
-    Problem<DoubleSolution> problem;
+    private CrossoverOperator<DoubleSolution> crossover;
+    private MutationOperator<DoubleSolution> mutation;
+    private SelectionOperator<List<DoubleSolution>, DoubleSolution> selection;
+    private Problem<DoubleSolution> problem;
 
     @Override
     public MOMBI2<?> configure(int popSize, int maxFitnessEvaluations, Problem problem) {
@@ -58,6 +58,38 @@ public class MOMBI2Configuration implements AlgorithmConfiguration<MOMBI2<?>> {
         mutation = new PolynomialMutation(mutationProbability, mutationDistributionIndex);
 
         selection = new BinaryTournamentSelection<>(new RankingAndCrowdingDistanceComparator<>());
+    }
+
+    public CrossoverOperator<DoubleSolution> getCrossover() {
+        return crossover;
+    }
+
+    public MutationOperator<DoubleSolution> getMutation() {
+        return mutation;
+    }
+
+    public SelectionOperator<List<DoubleSolution>, DoubleSolution> getSelection() {
+        return selection;
+    }
+
+    public Problem<DoubleSolution> getProblem() {
+        return problem;
+    }
+
+    public void setCrossover(CrossoverOperator<DoubleSolution> crossover) {
+        this.crossover = crossover;
+    }
+
+    public void setMutation(MutationOperator<DoubleSolution> mutation) {
+        this.mutation = mutation;
+    }
+
+    public void setSelection(SelectionOperator<List<DoubleSolution>, DoubleSolution> selection) {
+        this.selection = selection;
+    }
+
+    public void setProblem(Problem<DoubleSolution> problem) {
+        this.problem = problem;
     }
 
 }

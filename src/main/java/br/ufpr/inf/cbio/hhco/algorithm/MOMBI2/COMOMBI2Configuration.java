@@ -27,9 +27,11 @@ public class COMOMBI2Configuration extends MOMBI2Configuration {
 
     @Override
     public COMOMBI2<?> configure(int popSize, int maxFitnessEvaluations, Problem problem) {
-        this.problem = problem;
+        setProblem(problem);
         super.setup();
-        return new COMOMBI2<>(problem, popSize * maxFitnessEvaluations, crossover, mutation, selection, new SequentialSolutionListEvaluator<>(), "WeightVectorsMOMBI2/W" + problem.getNumberOfObjectives() + "D_" + popSize + ".dat");
+        return new COMOMBI2<>(problem, popSize * maxFitnessEvaluations, getCrossover(),
+                getMutation(), getSelection(), new SequentialSolutionListEvaluator<>(),
+                "WeightVectorsMOMBI2/W" + problem.getNumberOfObjectives() + "D_" + popSize + ".dat");
     }
 
 }
