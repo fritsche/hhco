@@ -41,5 +41,9 @@ public class MOEASFIRLogger extends HHCOLogger {
             buffer.append("\t");
         }
         ow.writeLine(buffer.toString());
+
+        if (hhco.getEvaluations() >= hhco.getMaxEvaluations()) {
+            close();
+        }
     }
 }

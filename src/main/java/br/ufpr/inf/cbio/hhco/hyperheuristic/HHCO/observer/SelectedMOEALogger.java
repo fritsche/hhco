@@ -35,5 +35,10 @@ public class SelectedMOEALogger extends HHCOLogger {
         CooperativeAlgorithm selected = hhco.getSelected();
         List<CooperativeAlgorithm> algorithms = hhco.getAlgorithms();
         ow.writeLine(Integer.toString(algorithms.indexOf(selected)));
+
+        if (hhco.getEvaluations() >= hhco.getMaxEvaluations()) {
+            close();
+        }
+
     }
 }
