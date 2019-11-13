@@ -10,7 +10,6 @@ import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistance;
 import org.uma.jmetal.qualityindicator.impl.InvertedGenerationalDistancePlus;
 import org.uma.jmetal.qualityindicator.impl.SetCoverage;
 import org.uma.jmetal.qualityindicator.impl.Spread;
-import org.uma.jmetal.qualityindicator.impl.hypervolume.PISAHypervolume;
 import org.uma.jmetal.util.JMetalException;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.front.Front;
@@ -23,7 +22,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-import org.uma.jmetal.qualityindicator.impl.Hypervolume;
 import org.uma.jmetal.util.pseudorandom.JMetalRandom;
 
 /**

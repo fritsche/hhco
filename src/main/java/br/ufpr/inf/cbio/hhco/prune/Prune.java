@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.ufpr.inf.cbio.hhcoanalysis.prune;
+package br.ufpr.inf.cbio.hhco.prune;
 
 import br.ufpr.inf.cbio.hhco.algorithm.SPEA2SDE.EnvironmentalSelectionSDE;
 import br.ufpr.inf.cbio.hhco.algorithm.SPEA2SDE.StrengthRawFitnessSDE;
