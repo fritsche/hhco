@@ -38,7 +38,7 @@ public class CONSGAII<S extends Solution<?>> extends NSGAII implements Cooperati
     public List<S> offspringPopulation;
 
     public CONSGAII(Problem problem, int maxEvaluations, int populationSize, CrossoverOperator crossoverOperator, MutationOperator mutationOperator, SelectionOperator selectionOperator, Comparator dominanceComparator, SolutionListEvaluator evaluator) {
-        super(problem, maxEvaluations, populationSize, populationSize, populationSize, crossoverOperator, mutationOperator, selectionOperator, evaluator);
+        super(problem, maxEvaluations, populationSize + (populationSize % 2), populationSize + (populationSize % 2), populationSize + (populationSize % 2), crossoverOperator, mutationOperator, selectionOperator, evaluator);
     }
 
     @Override
