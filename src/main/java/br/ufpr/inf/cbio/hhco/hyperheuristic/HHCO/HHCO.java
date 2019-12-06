@@ -38,17 +38,17 @@ import org.uma.jmetal.util.SolutionListUtils;
  */
 public class HHCO<S extends Solution<?>> extends Observable implements Algorithm<List<S>> {
 
-    private ArrayList<Double> moeasfir;
-    private int maxEvaluations;
-    private Problem<S> problem;
+    protected ArrayList<Double> moeasfir;
+    protected int maxEvaluations;
+    protected Problem<S> problem;
     protected final int populationSize;
     protected final String name;
     protected final SelectionFunction<CooperativeAlgorithm> selection;
     protected final FitnessImprovementRateCalculator calculator;
-    private int evaluations;
-    private List<CooperativeAlgorithm<S>> algorithms;
+    protected int evaluations;
+    protected List<CooperativeAlgorithm<S>> algorithms;
     protected double fir;
-    private CooperativeAlgorithm<S> selected;
+    protected CooperativeAlgorithm<S> selected;
 
     public HHCO(List<CooperativeAlgorithm<S>> algorithms, int populationSize, int maxEvaluations,
             Problem problem, String name, SelectionFunction<CooperativeAlgorithm> selection,
@@ -64,7 +64,7 @@ public class HHCO<S extends Solution<?>> extends Observable implements Algorithm
         JMetalLogger.logger.log(Level.CONFIG, "Fitness Improvement Rate: {0}", fir.getClass().getSimpleName());
     }
 
-    private Map<CooperativeAlgorithm<S>, List<S>> copyPopulations() {
+    public Map<CooperativeAlgorithm<S>, List<S>> copyPopulations() {
         Map<CooperativeAlgorithm<S>, List<S>> populations = new HashMap(getAlgorithms().size());
         for (CooperativeAlgorithm<S> algorithm : getAlgorithms()) {
             List<S> population = new ArrayList<>(algorithm.getPopulation().size());
@@ -76,7 +76,7 @@ public class HHCO<S extends Solution<?>> extends Observable implements Algorithm
         return populations;
     }
 
-    private void computeImprovementOfAllMOEAs(Map<CooperativeAlgorithm<S>, List<S>> populations) {
+    public void computeImprovementOfAllMOEAs(Map<CooperativeAlgorithm<S>, List<S>> populations) {
         moeasfir = new ArrayList<>(getAlgorithms().size());
         int i = 0;
         for (CooperativeAlgorithm<S> algorithm : algorithms) {
