@@ -17,13 +17,13 @@
 package br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO;
 
 import br.ufpr.inf.cbio.hhco.hyperheuristic.CooperativeAlgorithm;
+import br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.logger.HHCOLogger;
 import br.ufpr.inf.cbio.hhco.hyperheuristic.selection.SelectionFunction;
 import br.ufpr.inf.cbio.hhco.metrics.fir.FitnessImprovementRateCalculator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 import java.util.logging.Level;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.Problem;
@@ -36,7 +36,7 @@ import org.uma.jmetal.util.SolutionListUtils;
  * @author Gian Fritsche <gmfritsche at inf.ufpr.br>
  * @param <S>
  */
-public class HHCO<S extends Solution<?>> extends Observable implements Algorithm<List<S>> {
+public class HHCO<S extends Solution<?>> implements Algorithm<List<S>> {
 
     protected ArrayList<Double> moeasfir;
     protected int maxEvaluations;
@@ -49,6 +49,8 @@ public class HHCO<S extends Solution<?>> extends Observable implements Algorithm
     protected List<CooperativeAlgorithm<S>> algorithms;
     protected double fir;
     protected CooperativeAlgorithm<S> selected;
+    
+    protected List<HHCOLogger> loggers = new ArrayList<>();
 
     public HHCO(List<CooperativeAlgorithm<S>> algorithms, int populationSize, int maxEvaluations,
             Problem problem, String name, SelectionFunction<CooperativeAlgorithm> selection,
@@ -139,9 +141,8 @@ public class HHCO<S extends Solution<?>> extends Observable implements Algorithm
 
             // move acceptance
             // ALL MOVES
-            // notify observers
-            setChanged();
-            notifyObservers();
+            // notify loggers
+            notifyLoggers();
 
         }
 
@@ -157,6 +158,7 @@ public class HHCO<S extends Solution<?>> extends Observable implements Algorithm
 
     @Override
     public List<S> getResult() {
+        closeLoggers();
         List<S> union = new ArrayList<>();
         for (CooperativeAlgorithm alg : algorithms) {
             union.addAll(alg.getPopulation());
@@ -218,4 +220,20 @@ public class HHCO<S extends Solution<?>> extends Observable implements Algorithm
         return selected;
     }
 
+    public void addLogger(HHCOLogger logger){
+        loggers.add(logger);
+    }
+
+    protected void notifyLoggers() {
+        for (HHCOLogger logger : loggers) {
+            logger.update(this);
+        }
+    }
+
+    protected void closeLoggers() {
+        for (HHCOLogger logger : loggers) {
+            logger.close();
+        }
+    }
+    
 }

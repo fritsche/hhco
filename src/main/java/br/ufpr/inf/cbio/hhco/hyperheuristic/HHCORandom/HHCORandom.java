@@ -33,13 +33,6 @@ import org.uma.jmetal.util.JMetalLogger;
  */
 public class HHCORandom<S extends Solution<?>> extends HHCO<S> {
 
-    private CooperativeAlgorithm<S> selected;
-
-    @Override
-    public CooperativeAlgorithm<S> getSelected() {
-        return selected;
-    }
-
     public HHCORandom(List<CooperativeAlgorithm<S>> algorithms, int populationSize, int maxEvaluations, Problem problem) {
         super(algorithms, populationSize, maxEvaluations, problem, "HHCORandom", new RandomSelection<CooperativeAlgorithm>(), new VoidFIR());
     }
@@ -84,9 +77,8 @@ public class HHCORandom<S extends Solution<?>> extends HHCO<S> {
                 }
             }
 
-            // notify observers
-            setChanged();
-            notifyObservers();
+            // notify loggers
+            notifyLoggers();
 
         }
 

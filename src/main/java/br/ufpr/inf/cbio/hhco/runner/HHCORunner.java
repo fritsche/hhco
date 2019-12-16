@@ -18,9 +18,9 @@ package br.ufpr.inf.cbio.hhco.runner;
 
 import br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.HHCO;
 import br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.HHCOConfiguration;
-import br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.observer.HHCOLogger;
-import br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.observer.MOEASFIRLogger;
-import br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.observer.SelectedMOEALogger;
+import br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.logger.HHCOLogger;
+import br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.logger.MOEASFIRLogger;
+import br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.logger.SelectedMOEALogger;
 import br.ufpr.inf.cbio.hhco.problem.ProblemFactory;
 import br.ufpr.inf.cbio.hhco.runner.methodology.MaFMethodology;
 import br.ufpr.inf.cbio.hhco.runner.methodology.Methodology;
@@ -142,7 +142,7 @@ public class HHCORunner {
 
             // append loggers to algorithm
             for (HHCOLogger logger : loggers) {
-                hhco.addObserver(logger);
+                hhco.addLogger(logger);
             }
 
             AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(hhco)

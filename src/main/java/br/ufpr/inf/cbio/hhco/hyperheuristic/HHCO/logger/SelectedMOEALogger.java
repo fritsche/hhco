@@ -14,36 +14,31 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.observer;
+package br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.logger;
 
 import br.ufpr.inf.cbio.hhco.hyperheuristic.CooperativeAlgorithm;
 import br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.HHCO;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author Gian Fritsche <gmfritsche at inf.ufpr.br>
  */
-public class MOEASFIRLogger extends HHCOLogger {
+public class SelectedMOEALogger extends HHCOLogger {
 
-    public MOEASFIRLogger(String folder, String file) {
+    public SelectedMOEALogger(String folder, String file) {
         super(folder, file);
     }
 
     @Override
     public void update(HHCO hhco) {
+        CooperativeAlgorithm selected = hhco.getSelected();
         List<CooperativeAlgorithm> algorithms = hhco.getAlgorithms();
-        ArrayList<Double> list = hhco.getMoeasfir();
-        StringBuilder buffer = new StringBuilder();
-        for (int i = 0; i < algorithms.size(); i++) {
-            buffer.append(list.get(i));
-            buffer.append("\t");
-        }
-        ow.writeLine(buffer.toString());
+        ow.writeLine(Integer.toString(algorithms.indexOf(selected)));
 
         if (hhco.getEvaluations() >= hhco.getMaxEvaluations()) {
             close();
         }
+
     }
 }

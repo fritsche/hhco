@@ -14,31 +14,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.observer;
+package br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.logger;
 
-import br.ufpr.inf.cbio.hhco.hyperheuristic.CooperativeAlgorithm;
 import br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.HHCO;
-import java.util.List;
+import br.ufpr.inf.cbio.hhco.util.output.OutputWriter;
+import java.util.logging.Level;
+import org.uma.jmetal.util.JMetalLogger;
 
 /**
  *
  * @author Gian Fritsche <gmfritsche at inf.ufpr.br>
  */
-public class SelectedMOEALogger extends HHCOLogger {
+public abstract class HHCOLogger {
 
-    public SelectedMOEALogger(String folder, String file) {
-        super(folder, file);
+    protected final OutputWriter ow;
+
+    public HHCOLogger(String folder, String file) {
+        JMetalLogger.logger.log(Level.CONFIG, "{0}: ENABLED", this.getClass().getSimpleName());
+        ow = new OutputWriter(folder, file);
     }
 
-    @Override
-    public void update(HHCO hhco) {
-        CooperativeAlgorithm selected = hhco.getSelected();
-        List<CooperativeAlgorithm> algorithms = hhco.getAlgorithms();
-        ow.writeLine(Integer.toString(algorithms.indexOf(selected)));
+    public abstract void update(HHCO hhco);
 
-        if (hhco.getEvaluations() >= hhco.getMaxEvaluations()) {
-            close();
-        }
-
+    /**
+     * Close buffer and write to file
+     */
+    public void close() {
+        ow.close();
     }
+
 }

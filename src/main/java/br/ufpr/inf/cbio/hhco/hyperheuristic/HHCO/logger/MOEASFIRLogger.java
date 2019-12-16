@@ -14,40 +14,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.observer;
+package br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.logger;
 
+import br.ufpr.inf.cbio.hhco.hyperheuristic.CooperativeAlgorithm;
 import br.ufpr.inf.cbio.hhco.hyperheuristic.HHCO.HHCO;
-import br.ufpr.inf.cbio.hhco.util.output.OutputWriter;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.logging.Level;
-import org.uma.jmetal.util.JMetalLogger;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Gian Fritsche <gmfritsche at inf.ufpr.br>
  */
-public abstract class HHCOLogger implements Observer {
+public class MOEASFIRLogger extends HHCOLogger {
 
-    protected final OutputWriter ow;
-
-    public HHCOLogger(String folder, String file) {
-        JMetalLogger.logger.log(Level.CONFIG, "{0}: ENABLED", this.getClass().getSimpleName());
-        ow = new OutputWriter(folder, file);
+    public MOEASFIRLogger(String folder, String file) {
+        super(folder, file);
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        update((HHCO) o);
+    public void update(HHCO hhco) {
+        List<CooperativeAlgorithm> algorithms = hhco.getAlgorithms();
+        ArrayList<Double> list = hhco.getMoeasfir();
+        StringBuilder buffer = new StringBuilder();
+        for (int i = 0; i < algorithms.size(); i++) {
+            buffer.append(list.get(i));
+            buffer.append("\t");
+        }
+        ow.writeLine(buffer.toString());
+
+        if (hhco.getEvaluations() >= hhco.getMaxEvaluations()) {
+            close();
+        }
     }
-
-    public abstract void update(HHCO hhco);
-
-    /**
-     * Close buffer and write to file
-     */
-    public void close() {
-        ow.close();
-    }
-
 }
