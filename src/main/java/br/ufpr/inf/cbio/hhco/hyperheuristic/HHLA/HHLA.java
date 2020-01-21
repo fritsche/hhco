@@ -17,11 +17,11 @@
 package br.ufpr.inf.cbio.hhco.hyperheuristic.HHLA;
 
 import br.ufpr.inf.cbio.hhco.hyperheuristic.CooperativeAlgorithm;
+import br.ufpr.inf.cbio.hhco.hyperheuristic.HHLA.observer.HHLALogger;
 import br.ufpr.inf.cbio.hhco.hyperheuristic.selection.SelectionFunction;
 import br.ufpr.inf.cbio.hhco.metrics.fir.FitnessImprovementRateCalculator;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 import java.util.logging.Level;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.problem.Problem;
@@ -38,7 +38,7 @@ import org.uma.jmetal.util.SolutionListUtils;
  * @author Gian Fritsche <gmfritsche@inf.ufpr.br>
  * @param <S>
  */
-public class HHLA<S extends Solution<?>> extends Observable implements Algorithm<List<S>> {
+public class HHLA<S extends Solution<?>> implements Algorithm<List<S>> {
 
     private int maxEvaluations;
     private Problem<S> problem;
@@ -53,6 +53,8 @@ public class HHLA<S extends Solution<?>> extends Observable implements Algorithm
     private int k; // maximum number of iterations K for applying a low level MOEA
     private List<S> popcurr;
     private double deltaV; // threshold value for improvement
+
+    protected List<HHLALogger> loggers = new ArrayList<>();
 
     public HHLA(List<CooperativeAlgorithm<S>> algorithms, int populationSize, int maxEvaluations,
             Problem problem, String name, SelectionFunction<CooperativeAlgorithm> selection,
@@ -111,7 +113,6 @@ public class HHLA<S extends Solution<?>> extends Observable implements Algorithm
             setImprovement(calculator.computeFitnessImprovementRate(popcurr, popnext));
 
             // JMetalLogger.logger.log(Level.INFO, "{0}({1})", new Object[]{selected, getImprovement()});
-            
             // 4. Popcurr <- Replace(Popcurr, Popnext);
             popcurr = new ArrayList<>(populationSize);
             popcurr.addAll(popnext);
@@ -136,9 +137,9 @@ public class HHLA<S extends Solution<?>> extends Observable implements Algorithm
                 selected.init(copy, populationSize);
                 g = 0;
             }
-            
-            setChanged();
-            notifyObservers();
+
+            // notify loggers
+            notifyLoggers();
         }
     }
 
@@ -227,6 +228,22 @@ public class HHLA<S extends Solution<?>> extends Observable implements Algorithm
 
     public void setDeltaV(double deltaV) {
         this.deltaV = deltaV;
+    }
+
+    public void addLogger(HHLALogger logger) {
+        loggers.add(logger);
+    }
+
+    protected void notifyLoggers() {
+        for (HHLALogger logger : loggers) {
+            logger.update(this);
+        }
+    }
+
+    protected void closeLoggers() {
+        for (HHLALogger logger : loggers) {
+            logger.close();
+        }
     }
 
 }

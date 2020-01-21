@@ -134,22 +134,8 @@ public class HHLARunner {
                     + algorithmName + "/"
                     + problemName + "/";
 
-            // create loggers
-            List<HHLALogger> loggers = new ArrayList<>();
-            loggers.add(new SelectedMOEALogger(outputfolder, "selected." + id));
-
-            // append loggers to algorithm
-            for (HHLALogger logger : loggers) {
-                hhla.addObserver(logger);
-            }
-
             AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(hhla)
                     .execute();
-
-            // close loggers (write to file)
-            for (HHLALogger logger : loggers) {
-                logger.close();
-            }
 
             long computingTime = algorithmRunner.getComputingTime();
             JMetalLogger.logger.log(Level.INFO, "Total execution time: {0}ms", computingTime);

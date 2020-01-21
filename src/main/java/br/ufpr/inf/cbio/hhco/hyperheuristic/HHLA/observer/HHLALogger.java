@@ -18,8 +18,6 @@ package br.ufpr.inf.cbio.hhco.hyperheuristic.HHLA.observer;
 
 import br.ufpr.inf.cbio.hhco.hyperheuristic.HHLA.HHLA;
 import br.ufpr.inf.cbio.hhco.util.output.OutputWriter;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.logging.Level;
 import org.uma.jmetal.util.JMetalLogger;
 
@@ -27,18 +25,13 @@ import org.uma.jmetal.util.JMetalLogger;
  *
  * @author Gian Fritsche <gmfritsche at inf.ufpr.br>
  */
-public abstract class HHLALogger implements Observer {
+public abstract class HHLALogger {
 
     protected final OutputWriter ow;
 
     public HHLALogger(String folder, String file) {
         JMetalLogger.logger.log(Level.CONFIG, "{0}: ENABLED", this.getClass().getSimpleName());
         ow = new OutputWriter(folder, file);
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        update((HHLA) o);
     }
 
     public abstract void update(HHLA hhla);
